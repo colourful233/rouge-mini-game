@@ -3,3 +3,9 @@ node_modules/
 miniprogram_npm/
 .DS_Store
 project.private.config.json
+
+# Local worktrees and generated build output
+*.log
+dist/
+build/
+coverage/
