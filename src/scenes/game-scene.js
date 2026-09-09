@@ -1,4 +1,5 @@
 const config = require('../config/game-config')
+const world = require('../config/world-config')
 const drawing = require('../ui/canvas-drawing')
 
 class GameScene {
@@ -16,7 +17,7 @@ class GameScene {
     context.clearRect(0, 0, width, height)
     context.fillStyle = colors.background
     context.fillRect(0, 0, width, height)
-    drawing.drawText(context, '航线 01', 24, 42, {
+    drawing.drawText(context, '远征 01 · ' + world.routeTitle, 24, 42, {
       font: '700 15px sans-serif',
       color: colors.text
     })
@@ -27,12 +28,12 @@ class GameScene {
     })
 
     drawing.fillRoundedRect(context, 24, 76, width - 48, height - 160, 16, colors.backgroundLight)
-    drawing.drawText(context, '游戏场景已启动', width / 2, height / 2 - 12, {
+    drawing.drawText(context, '远征场景已启动', width / 2, height / 2 - 12, {
       font: '700 24px sans-serif',
       color: colors.text,
       align: 'center'
     })
-    drawing.drawText(context, '下一步：接入飞机控制与随机事件', width / 2, height / 2 + 24, {
+    drawing.drawText(context, world.routeDetail, width / 2, height / 2 + 24, {
       font: '14px sans-serif',
       color: colors.textMuted,
       align: 'center'

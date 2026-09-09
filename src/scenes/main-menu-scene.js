@@ -1,4 +1,5 @@
 const config = require('../config/game-config')
+const world = require('../config/world-config')
 const drawing = require('../ui/canvas-drawing')
 
 class MainMenuScene {
@@ -19,7 +20,7 @@ class MainMenuScene {
     context.fillRect(0, 0, width, height)
 
     this.drawGrid(context, colors, width, height)
-    drawing.drawText(context, 'ROGUELIKE FLIGHT', padding, 54, {
+    drawing.drawText(context, world.genre, padding, 54, {
       font: '700 12px sans-serif',
       color: colors.primary
     })
@@ -29,16 +30,20 @@ class MainMenuScene {
       align: 'right'
     })
 
-    drawing.drawText(context, '肉鸽小游戏', padding, 144, {
+    drawing.drawText(context, world.title, padding, 144, {
       font: '700 38px sans-serif',
       color: colors.text
     })
-    drawing.drawText(context, '每一次起飞，都是一条新的航线', padding, 178, {
+    drawing.drawText(context, world.tagline, padding, 178, {
       font: '16px sans-serif',
       color: colors.textMuted
     })
+    drawing.drawText(context, world.shortStory, padding, 202, {
+      font: '13px sans-serif',
+      color: colors.textSubtle
+    })
 
-    this.drawFlightCard(context, colors, padding, 224, width - padding * 2)
+    this.drawAdventureCard(context, colors, padding, 242, width - padding * 2)
 
     drawing.fillRoundedRect(context, button.x, button.y, button.width, button.height, 12, colors.primary)
     drawing.drawText(context, '开始游戏', button.x + button.width / 2, button.y + button.height / 2 + 1, {
@@ -47,7 +52,7 @@ class MainMenuScene {
       align: 'center',
       baseline: 'middle'
     })
-    drawing.drawText(context, '选择路线 · 获取强化 · 挑战首领', width / 2, button.y + button.height + 32, {
+    drawing.drawText(context, '选择路线 · 探索遗迹 · 挑战魔王', width / 2, button.y + button.height + 32, {
       font: '13px sans-serif',
       color: colors.textSubtle,
       align: 'center'
@@ -71,22 +76,22 @@ class MainMenuScene {
     }
   }
 
-  drawFlightCard(context, colors, x, y, width) {
+  drawAdventureCard(context, colors, x, y, width) {
     const height = 132
     drawing.fillRoundedRect(context, x, y, width, height, 16, colors.panel)
     drawing.strokeRoundedRect(context, x, y, width, height, 16, colors.panelLine, 1)
 
     context.fillStyle = colors.accent
     context.fillRect(x + 22, y + 22, 4, 42)
-    drawing.drawText(context, '今日航线', x + 42, y + 42, {
+    drawing.drawText(context, '当前远征', x + 42, y + 42, {
       font: '600 14px sans-serif',
       color: colors.textMuted
     })
-    drawing.drawText(context, '未知空域', x + 42, y + 75, {
+    drawing.drawText(context, world.routeTitle, x + 42, y + 75, {
       font: '700 23px sans-serif',
       color: colors.text
     })
-    drawing.drawText(context, '随机事件已准备', x + 42, y + 103, {
+    drawing.drawText(context, world.routeStatus, x + 42, y + 103, {
       font: '13px sans-serif',
       color: colors.textSubtle
     })
@@ -94,20 +99,21 @@ class MainMenuScene {
     context.save()
     context.translate(x + width - 76, y + 60)
     context.rotate(-0.18)
-    context.fillStyle = colors.primary
+    context.fillStyle = colors.accent
     context.beginPath()
-    context.moveTo(-30, 0)
-    context.lineTo(22, -8)
-    context.lineTo(31, 0)
-    context.lineTo(22, 8)
-    context.lineTo(-30, 4)
+    context.moveTo(-28, 18)
+    context.lineTo(-4, -26)
+    context.lineTo(4, 2)
+    context.lineTo(31, 11)
+    context.lineTo(2, 18)
+    context.closePath()
     context.closePath()
     context.fill()
     context.fillStyle = colors.panel
     context.beginPath()
-    context.moveTo(-4, 0)
-    context.lineTo(-18, 20)
-    context.lineTo(7, 7)
+    context.moveTo(-1, -8)
+    context.lineTo(-5, 8)
+    context.lineTo(12, 12)
     context.closePath()
     context.fill()
     context.restore()
