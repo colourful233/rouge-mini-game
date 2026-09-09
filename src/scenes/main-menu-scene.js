@@ -1,11 +1,15 @@
 const config = require('../config/game-config')
 const world = require('../config/world-config')
 const drawing = require('../ui/canvas-drawing')
+const currencyDisplay = require('../ui/currency-display')
 
 class MainMenuScene {
-  constructor(viewport, onStart) {
+  constructor(viewport, onStart, onShop, currencyState, onInventory) {
     this.viewport = viewport
     this.onStart = onStart
+    this.onShop = onShop
+    this.currencyState = currencyState
+    this.onInventory = onInventory
   }
 
   draw(context) {
@@ -14,12 +18,14 @@ class MainMenuScene {
     const colors = config.colors
     const padding = config.layout.horizontalPadding
     const button = this.getStartButton()
+    const navigation = this.getNavigationBar()
 
     context.clearRect(0, 0, width, height)
     context.fillStyle = colors.background
     context.fillRect(0, 0, width, height)
 
     this.drawGrid(context, colors, width, height)
+    currencyDisplay.drawCurrencyBar(context, this.currencyState, padding, 66, width - padding * 2)
     drawing.drawText(context, world.genre, padding, 54, {
       font: '700 12px sans-serif',
       color: colors.primary
@@ -52,10 +58,35 @@ class MainMenuScene {
       align: 'center',
       baseline: 'middle'
     })
-    drawing.drawText(context, '选择路线 · 探索遗迹 · 挑战魔王', width / 2, button.y + button.height + 32, {
+    drawing.drawText(context, '选择路线 · 探索遗迹 · 挑战魔王', width / 2, button.y + button.height + 28, {
       font: '13px sans-serif',
       color: colors.textSubtle,
       align: 'center'
+    })
+
+    context.fillStyle = colors.panel
+    context.fillRect(navigation.x, navigation.y, navigation.width, navigation.height)
+    context.strokeStyle = colors.panelLine
+    context.lineWidth = 1
+    context.beginPath()
+    context.moveTo(navigation.x, navigation.y + 0.5)
+    context.lineTo(navigation.x + navigation.width, navigation.y + 0.5)
+    context.stroke()
+
+    const labels = ['首页', '角色', '图鉴', '商城', '背包']
+    labels.forEach((label, index) => {
+      const item = this.getNavigationItem(index)
+      const active = index === 0
+      drawing.drawText(context, label, item.x + item.width / 2, item.y + item.height / 2, {
+        font: active ? '700 14px sans-serif' : '14px sans-serif',
+        color: active ? colors.primary : colors.textMuted,
+        align: 'center',
+        baseline: 'middle'
+      })
+      if (active) {
+        context.fillStyle = colors.primary
+        context.fillRect(item.x + item.width / 2 - 14, navigation.y + navigation.height - 4, 28, 2)
+      }
     })
   }
 
@@ -122,9 +153,28 @@ class MainMenuScene {
   getStartButton() {
     return {
       x: (this.viewport.width - config.layout.buttonWidth) / 2,
-      y: this.viewport.height - 142,
+      y: this.viewport.height - 190,
       width: config.layout.buttonWidth,
       height: config.layout.buttonHeight
+    }
+  }
+
+  getNavigationBar() {
+    return {
+      x: 0,
+      y: this.viewport.height - 68,
+      width: this.viewport.width,
+      height: 68
+    }
+  }
+
+  getNavigationItem(index) {
+    const navigation = this.getNavigationBar()
+    return {
+      x: index * navigation.width / 5,
+      y: navigation.y,
+      width: navigation.width / 5,
+      height: navigation.height
     }
   }
 
@@ -132,6 +182,14 @@ class MainMenuScene {
     const button = this.getStartButton()
     const inside = x >= button.x && x <= button.x + button.width && y >= button.y && y <= button.y + button.height
     if (inside && this.onStart) this.onStart()
+
+    const shopItem = this.getNavigationItem(3)
+    const insideShop = x >= shopItem.x && x <= shopItem.x + shopItem.width && y >= shopItem.y && y <= shopItem.y + shopItem.height
+    if (insideShop && this.onShop) this.onShop()
+
+    const inventoryItem = this.getNavigationItem(4)
+    const insideInventory = x >= inventoryItem.x && x <= inventoryItem.x + inventoryItem.width && y >= inventoryItem.y && y <= inventoryItem.y + inventoryItem.height
+    if (insideInventory && this.onInventory) this.onInventory()
   }
 }
 

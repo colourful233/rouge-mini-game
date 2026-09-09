@@ -20,6 +20,10 @@ class SceneManager {
   handleTap(x, y) {
     if (this.currentScene && this.currentScene.handleTap) this.currentScene.handleTap(x, y)
   }
+
+  handleDrag(x, y, started) {
+    if (this.currentScene && this.currentScene.handleDrag) this.currentScene.handleDrag(x, y, started)
+  }
 }
 
 module.exports = SceneManager
