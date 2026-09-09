@@ -14,14 +14,15 @@
 
 ```text
 .
-├── game.js             # 小游戏启动入口
+├── game.js             # 小游戏唯一启动入口
 ├── game.json           # 小游戏运行配置
-├── app.js              # 备用小程序生命周期和全局状态
-├── app.json            # 备用页面配置
-├── app.wxss            # 备用全局样式
-├── pages/index/        # 可复用的界面代码
 ├── project.config.json # 微信开发者工具项目配置
-└── sitemap.json        # 页面索引配置
+├── VERSION             # 当前版本
+└── src/                # 游戏运行时代码
+    ├── config/         # 版本和视觉配置
+    ├── core/           # 输入和场景管理
+    ├── scenes/         # 主界面、游戏场景
+    └── ui/             # Canvas 绘制工具
 ```
 
 后续可以把实际玩法拆分到 `pages`、`components` 和 `utils` 目录，并将游戏循环或 Canvas 渲染逻辑放入独立模块。
