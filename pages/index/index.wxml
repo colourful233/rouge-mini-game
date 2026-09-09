@@ -1,0 +1,32 @@
+<view class="page-shell">
+  <view class="hero">
+    <view class="eyebrow">PLANE GAME</view>
+    <text class="title">准备起飞</text>
+    <text class="subtitle">这是游戏主场景的起点，后续可以在这里接入玩法、关卡和得分系统。</text>
+  </view>
+
+  <view class="flight-panel">
+    <view class="skyline skyline-back"></view>
+    <view class="skyline skyline-front"></view>
+    <view class="plane" aria-label="飞机"></view>
+    <view class="panel-copy">
+      <text class="panel-label">当前状态</text>
+      <text class="panel-status">{{started ? '飞行中' : '待命'}}</text>
+    </view>
+  </view>
+
+  <view class="stats-row">
+    <view class="stat-item">
+      <text class="stat-label">最高分</text>
+      <text class="stat-value">{{bestScore}}</text>
+    </view>
+    <view class="stat-item">
+      <text class="stat-label">版本</text>
+      <text class="stat-value">0.1.0</text>
+    </view>
+  </view>
+
+  <button wx:if="{{!started}}" class="primary-button" bindtap="startGame">开始游戏</button>
+  <button wx:else class="secondary-button" bindtap="resetGame">返回待命</button>
+  <text class="hint">游戏玩法将在后续版本中加入</text>
+</view>

@@ -1,0 +1,9 @@
+{
+  "desc": "Plane Game sitemap",
+  "rules": [
+    {
+      "action": "allow",
+      "page": "pages/index/index"
+    }
+  ]
+}

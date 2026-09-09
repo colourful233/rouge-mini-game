@@ -1,0 +1,14 @@
+{
+  "pages": [
+    "pages/index/index"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#101923",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "Plane Game",
+    "backgroundColor": "#101923",
+    "backgroundTextStyle": "light"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
